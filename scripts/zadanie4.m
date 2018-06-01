@@ -7,7 +7,7 @@ run('init')
 kknom=Ko/4.5;
 Ttnom=To/5;
 
-zet=20
+zet=24.4;
     
 Ko=4.5+zet/10;
 
@@ -32,7 +32,7 @@ Td=2.2;
 Te=0.5;
 
 r2=Kr*Td/Te; r1=Kr*(Te/(2*Ti)-2*Td/Te-1); r0=Kr*(1+Te/(2*Ti)+Td/Te); 
-kk=200; %koniec symulacji 
+kk=1000; %koniec symulacji 
 %warunki początkowe 
 u(1:z.InputDelay+2)=0; y(1:z.InputDelay+2)=0; 
 % yzad(1:2)=0; 
