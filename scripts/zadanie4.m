@@ -21,26 +21,31 @@ Kk=0.5012;
 Tk=19.95;
 
 
-Kr=Kk*0.6;
-Ti=Tk/2;
-Td=Tk*0.12;
+% Kr=Kk*0.6;
+% Ti=Tk/2;
+% Td=Tk*0.12;
 
 %  Lepsze parametry
-Ti=7;
-Td=2.2;
+
+ Kr=0.2;
+ Ti=7;
+ Td=0.8;
+
 
 Te=0.5;
 
 r2=Kr*Td/Te; r1=Kr*(Te/(2*Ti)-2*Td/Te-1); r0=Kr*(1+Te/(2*Ti)+Td/Te); 
-kk=1000; %koniec symulacji 
+kk=200; %koniec symulacji 
 %warunki początkowe 
 u(1:z.InputDelay+2)=0; y(1:z.InputDelay+2)=0; 
 % yzad(1:2)=0; 
 yzad(1:kk)=2;
 
 % ????
-e(1:z.InputDelay+2)=yzad(1)-y(1);  
+e(1:z.InputDelay+2)=0;
+% yzad(1)-y(1);  
 % e(1:12)=0;
+
 
  for k= z.InputDelay+3:kk; %główna pętla symulacyjna 
  %symulacja obiektu 
@@ -53,14 +58,8 @@ e(1:z.InputDelay+2)=yzad(1)-y(1);
  end
 %wyniki symulacji 
 
-%  figure; stairs(u); 
-%  title('u'); xlabel('k'); 
-stairs(y); hold on; 
-title('yzad, y'); xlabel('k')
-
-
-% kknom=[kknom Ko/4.5];
-% Ttnom=[Ttnom To/5];
-
-% figure
-% plot(Ttnom, kknom);
+stairs(u); 
+title('u'); xlabel('k'); hold on
+% stairs(y); hold on; 
+% title('yzad, y'); xlabel('k')
+legend('parametry Z-N', 'parametry dostrojone')
