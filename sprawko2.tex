@@ -178,6 +178,8 @@ Przemawiają za nimi brak oscylacji oraz zdecydowanie krótszy czas regulacji.
 
 Następne doświadczenia będą przeprowadzane w dwóch przypadkach, dla nastaw wyznaczonych metodą Z-N oraz najlepszych znalezionych.
 
+\section{Regulatory dyskretne}
+
 Następnym zadaniem było wyznaczenie nastaw regulatora cyfrowego. Ma on postać
 {\Large
 \begin{equation}
@@ -225,5 +227,177 @@ Poniżej znajdują się wartości współczynników obliczonych na podstawie pop
 \end{figure}
 
 Sygnał wyjściowy nie różni się zbytnio w przypadku początkowych nastaw i poprawionych, chociaż łagodniejsza odpowiedź i nieco krótszy czas regulacji przemawiają wciąż za wartościami dobranymi później. Dopiero wykres sygnału sterującego ukazuje zdecydowanie bardziej przyjazną trajektorię dla poprawionych współczynników, co ujawnia się trzykrotnie mniejszym skokiem sterowania na początku regulacji i łagodniejszym jego zmianom oraz szybszemu ustaleniu wartości.
+
+\section{Regulator DMC}
+
+Regulator DMC (Dynamic Matrix Control) jest jednym z przykładów algorytmów regulacji predykcyjnej. Stosowany jest do obiektów stabilnych, gdyż opiera się na wyznaczonej uprzednio odpowiedzi skokowej obiektu, a dokładniej na dyskretnych próbkach $S$ tej odpowiedzi. Ich zebranie to pierwszy punkt algorytmu. Zadaniem w projekcie było zaprojektowanie wersji analitycznej regulatora bez ograniczeń. Głównymi parametrami regulatora są parametry $D$, $N$ oraz $N_u$. Zostaną one omówione poniżej.
+
+Przewidywana trajektoria obiektu regulacji wyraża się wyrażeniem wektorowym
+{\Large
+\begin{equation}
+	\hat{Y}(k) = Y^o(k)+\Delta Y(k)
+\end{equation}
+}
+gdzie $Y^o(k)$ nazywana jest odpowiedzią swobodną, a $Y(k)$ odpowiedzią wymuszoną.
+
+\subsection{Odpowiedź swobodna}
+
+Odpowiedź swobodną wyznacza się w sposób wektorowy korzystając z poniższego wzoru
+{\Large
+\begin{equation}
+	 Y^o (k) = Y(k) + M^P \Delta U^P (k)
+\end{equation}
+}
+gdzie $Y(k)$ to wektor $N$ aktualnych wyjść procesu, $M^P$ o wymiarowości $NxD-1$ to macierz postaci
+{\Large
+\begin{equation}
+	M^P=\begin{bmatrix}
+		s_2-s_1 & s_3-s_2 & \dots & s_D-s_{D-1}\\
+		s_3-s_1 & s_4-s_2 & \dots & s_{D+1}-s_{D-1}\\
+		\vdots & \vdots & \ddots & \vdots \\
+		s_{N+1}-s_1 & s_{N+2}-s_2 & \dots	& s_{N+D-1}-s_{D-1}
+	\end{bmatrix}
+\end{equation}
+}
+
+natomiast wektor $\Delta U^p(k)$ to wektor przeszłych $D-1$ zmian sterowania.
+
+\subsection{Odpowiedź wymuszona}
+
+Drugą część równania $\hat{Y}(k)$ wyznacza się korzystając z Zależności
+{\Large
+\begin{equation}
+	\Delta Y(k)=M\Delta U(k)
+\end{equation}
+}
+gdzie $\Delta Y(k)$ to wektor różnicy wartości zadanej wyjścia obiektu i ostatniej wartości jego odpowiedzi, macierz $M$ o wymiarach $NxN_u$ wyznacza się ze wzoru
+
+{\Large
+\begin{equation}
+	M=\begin{bmatrix}
+		s_1 & 0 & \dots & 0 \\
+		s_2 & s_1 & \dots & 0 \\
+		\vdots & \vdots & \ddots & \vdots \\
+		s_N & s_{N-1} & \dots & s_{N-N_u+1}
+\end{bmatrix}
+\end{equation}
+}
+
+natomiast wektor optymalnych zmian sterowań $\Delta U(k)$ wyznacza się korzystając ze wzoru
+
+{\Large
+\begin{equation}
+	\Delta U(k)=(M^T\Psi M+\Lambda)^{-1}M^T\Psi (\Delta Y(k)-M^P\Delta U^P(k))
+\end{equation}
+}
+Macierze diagonalne $\Psi$ oraz $\Lambda$ są głównymi parametrami dostrajania regulatora DMC. W przypadku zadania projektowego ustalono macierz $\Psi$ jako macierz jednostkową $I$, macierz $\Lambda$ będzie później wykorzystana przy ograniczaniu zmian sterowania.
+
+\section{Dobieranie regulatora DMC}
+
+Dobieranie regulatora polega na wyznaczeniu wartości parametrów
+\begin{itemize}
+	\item $D$ - horyzont dynamiki - ilość próbek, po których odpowiedź skokowa obiektu ustala się na jednej wartości
+	\item $N$ - horyzont predykcji
+	\item $N_u$ - horyzont sterowania
+\end{itemize}
+
+Pierwszym krokiem, jak już zostało zaznaczone, jest wyznaczenie dyskretnych wartości odpowiedzi skokowej obiektu, a następnie na jej podstawie wyznaczenie horyzontu dynamiki.
+
+W przypadku obiektu o parametrach z zadania $2.29$ odpowiedź skokowa ma następującą postać
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/odpskokdys.png}
+	\caption{dyskretna odpowiedź skokowa obiektu}
+\end{figure}
+
+\subsection{Wyznaczanie horyzontu dynamiki}
+
+
+Po przeanalizowaniu powyższego wykresu ustalono wartość horyzontu dynamiki na $125$. Ustawiono wartości parametrów $N$ i $N_u$ na tą samą wartość, wartość współczynnika $\lambda$ macierzy $\Lambda$ ustalono początkowo na wartość $1$ i przetestowano jakość algorytmu. Wyniki eksperymentu znajdują się Poniżej
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/regDDD.png}
+	\caption{odpowiedź obiektu regulacji przy nastawach $125, 125, 125, 1$}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/regDDDster.png}
+	\caption{sygnał sterujący przy nastawach $125, 125, 125, 1$}
+	\label{}
+\end{figure}
+
+Jak widać regulator został poprawnie zaprojektowany, podstawowe nastawy parametrów powodują szybką regulację z niewielkim przeregulowaniem. Dalszą częscią zadania było ograniczenie wartości parametru horyzontu predykcji, co znacząco zmniejszyło nakład obliczeń algorytmu dzięki mniejszym wektorom i macierzom.
+
+\subsection{Wyznaczanie horyzontu predykcji}
+
+
+Przeprowadzono kilka testów i ostatecznie zdecydowano na wybranie wartości z okolic $20$. Poniżej przedstawiono kilka odpowiedzi dla różnych wartości z okolic tej liczby. Wartość horyzontu dynamiki pozostała niemzieniona, tak samo wartość parametru $\lambda$. Przyjęto też $N_u=N$.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/zadanie5bwyjscie.png}
+	\caption{odpowiedź obiektu regulacji dla parametrów $N$ oraz $N_u$ w okolicach 20}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/zadanie5bster.png}
+	\caption{sygnał sterujący obiektu regulacji dla parametrów $N$ oraz $N_u$ w okolicach 20}
+\end{figure}
+
+Jak widać wartości w granicach $(22;16)$ są bardzo zbliżone, jednak zdecydowano się pozostawić wartość horyzontu predykcji na 18, gdyż powoduje w miarę niewielkie zmiany sterowania i dosyć szybką regulację obiektu sterowania. Wyraźnie widać, że wybranie horyzontu mniejszego niż $16$ powodowało by zdecydowanie większe oscylacje i dłuższy czas regulacji niż większe wartości- po przekroczeniu tej granicy regulator traci powoli zdolności regulacji, posiada za mało danych, aby operować w sposób optymalny. Z kolei większe wartości wciąż oscylowały w okolicach tej samej odpowiedzi, co widać dzięki podobieństwu nastaw początkowych $(125, 125, 125, 1)$, które uzyskały podobną odpowiedź co nastawy ostatecznie wybrane. Widać więc, że regulator nie wymaga więcej danych, aby operować zgodnie z oczekiwaniami.
+
+\subsection{Wyznaczanie horyzontu sterowania}
+
+
+Następnym punktem doboru nastaw było wybranie odpowiedniej wartości horyzontu sterowania. Przy wartościach pozostałych parametrów ustalonych w poprzednim punkcie rozpoczęto badania współczynnika od $1$ i kilku następnych wartości.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/zadanie5cwyjscie.png}
+	\caption{odpowiedź obiektu regulacji dla różnych długości horyzontu sterowania}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/zadanie5cster.png}
+	\caption{wyjście sterowania obiektu regulacji dla różnych długości horyzontu sterowania}
+\end{figure}
+
+Na podstawie powyższych wykresów można wysnuć interesujący wniosek. Najlepsza jakość regulacji odpowiada horyzontowi sterowania równemu $1$. Zarówno odpowiedź obiektu, jak i wartość sterowania najszybciej się stabilizują i mają najmniejsze przeregulowania w drugiej fazie regulacji, między $10$ a $20$ próbką dla sterowania i $20$ a $30$ dla odpowiedzi. Jedynym problemem może być duża wartość początkowa sygnału sterującego, lecz i tak jest ona zdecydowanie mniejsza niż w przypadku horyzontu sterowania o długości $20$. Można wysnuć wniosek, że próba wyskoczenia zbyt daleko do przodu w tym przypadku szkodzi optylmalnej regulacji obiektu. Pozwala to jednak dodatkowo zminimalizować nakład obliczeń z pozytywnym wpływem na jakość regulacji.
+
+\subsection{Badanie parametru $\lambda$}
+
+	Parametr $\lambda$ ma za zadanie ograniczyć wartość sygnału sterującego. ponieważ  Zmiany jednostkowe nie przynosiły prawie żadnych zmian, zdecydowano się na wybranie kilku wartości z przedziału $(1;30)$. Wyniki znajdują się poniżej.
+
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{scripts/zadanie5dwyjscie.png}
+		\caption{wyjście obiektu regulacji dla kolejnych wartości parametru $\lambda$}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{scripts/zadanie5dster.png}
+		\caption{wartość sterowania obiektu regulacji dla kolejnych wartości parametru $\lambda$}
+	\end{figure}
+
+	Zwiększanie wartości parametru $\lambda$ zwiększa czas regulacji, ale zdecydowanie zmniejsza wartości sygnału sterującego. Dla wartości $15$ daje podobną odpowiedź obiektu jak w przypadku dłuższego horyzontu sterowania w poprzednim punkcie, ale zdecydowanie zmniejsza wartości sterowania, dlatego zdecydowano się wybrać właśnie tą wielkość.
+
+	\section{Obszary stabilności}
+
+Ostatnim zadaniem było wyznaczenie maksymalnych zmian obiektu, po których regulacja danym regulatorem nie była by możliwa, a następnie zdecydowanie, który algorytm jest bardziej odporny na zmiany obiektu. Przeprowadzono symulacje zmian wartości $T_o$ oraz $K_o$ tak aby uzyskać funkcję granicy stabilności $K_o/K_o^{nom}(T_o/T_o^{nom})$, gdzie $T_o/T_o^{nom}$ zawiera się w wartościach ${1.1;1.2;1.3;1.4;1.5;1.6;1.7;1.8;1.9;2}$.
+
+Proces przeprowadzania eksperymentu dla każdego z poniższych regulatorów był tożsamy - najpierw ustawiano wartość opóźnienia obiektu $T_o$ tak, aby był spełniony stosunek podany w wymaganiach zadania. Zaczęto od wartości $T_o/T_o^{nom}=1.1$. Następnie sukcesywnie zwiększano wartość $K_o$ aby dotrzeć do granicy stabilności obiektu. Po ustaleniu granicznej wartości następowało przejście do następniej wartości $T_o/T_o^{nom}$ i rozpoczynano proces od początku.
+
+Poniżej znajduje się wykres wartości granic stabilności dla regulatorów PID z nastawami Z-N, poprawionymi oraz algorytmu DMC z wyznaczonymi w poprzednim punkcie parametrami $D, N$ oraz $N_u$ i $\lambda$.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{scripts/zad6.png}
+	\caption{granice stabilności dla algorytmów PID oraz DMC}
+\end{figure}
+
+Pierwszą rzeczą, jaka jest widoczna od początku, jest przewaga zapasów stabilności regulatora DMC nad regulatorem PID. Chociaż dla dobrze dostrojonego algorytmu proporcjonalno-całjąco-różniczkującego na początku ta różnica nie jest duża, to w połowie testu zapasy DMC rosną zamiast maleć, więc różnica między algorytmami zaczyna się powiększać. Jednak gdy opóźnienie przekroczyło wartość  horyzontu predykcji, algorytm odmówił posłuszeństwa. Należy mieć więc na uwadze, że algorytm DMC jest bardziej odporny na zmiany wzmocnienia statycznego obiektu, ale szybciej staje się bezużyteczny przy zmianie opóźnienia.
+
+Warto również zaznaczyć, że lepiej dostrojony algorytm PID ma większe zapasy stabilności, mimo że te prawie liniowo wciąż się zmniejszają, jednak nie ma niebezpieczeństwa nagłego zaprzestania regulacji jak w drugim algorytmie.
+
+\section{Podsumowanie}
+
+Porównując obydwa algorytmy można stwierdzić, że regulator DMC ma więcej zalet. Jest nieco trudniejszy do implementacji, lecz powoduje zdecydowanie krótszą regulację, jest łatwiejszy do dostrojenia i ma większe zapasy stabilności, dopóki nie przekroczy się granicy horyzontu predykcji.
+
+Za to regulator PID jest prostszy w implementacji, nie ucina nagle procesu regulacji dla zbyt dużych zmian obiektu i początkowo niewiele odstaje zapasami stabilności od algorytmu DMC. Jego regulacja jest jednak dużo bardziej skomplikowana.
+
+Można więc stwierdzić, że do obiektów z opóźnieniem oba algorytmy znajdą swoje zastosowanie, lecz algorytm DMC jest bardziej użyteczny i przyjazny.
+
 
 \end{document}

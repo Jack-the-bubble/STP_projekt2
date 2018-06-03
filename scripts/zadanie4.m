@@ -3,11 +3,7 @@
 %inicjalizacja 
 run('init')
 
-
-kknom=Ko/4.5;
-Ttnom=To/5;
-
-zet=24.4;
+zet=4.8;
     
 Ko=4.5+zet/10;
 
@@ -58,8 +54,8 @@ e(1:z.InputDelay+2)=0;
  end
 %wyniki symulacji 
 
-stairs(u); 
-title('u'); xlabel('k'); hold on
-% stairs(y); hold on; 
+% stairs(u); 
+% title('u'); xlabel('k'); hold on
+stairs(y);% hold on; 
 % title('yzad, y'); xlabel('k')
-legend('parametry Z-N', 'parametry dostrojone')
+% legend('parametry Z-N', 'parametry dostrojone')

@@ -20,7 +20,7 @@ aa1=z.Denominator{1}; bb1=z.Numerator{1};
 a1=aa1(2); a0=aa1(3);b1=bb1(2);b0=bb1(3);
 
 % Czas symulacji oraz wartosc zadana
-kk = 400; % Koniec symulacji
+kk = 150; % Koniec symulacji
 U = ones(kk,1);
 U(1:opoz+2) = 0;  % Wymuszenie rowne 1 od momentu rozpoczecia symulacji
 Y = zeros(kk,1); % Kolejne probki odpowiedzi skokowej
@@ -81,7 +81,7 @@ for i = 1:N
 end
 
 % Czas symulacji oraz wartosc zadana
-kk = 350;             % Koniec symulacji
+kk = 150;             % Koniec symulacji
 U = zeros(kk,1);      % Wartosci sterowania
 Y = zeros(kk,1);      % Wyjscie obiektu
 deltaUp = zeros(D-1,1);      % Przyrosty sterowania z przeszlosci
@@ -100,15 +100,15 @@ for k = opoz+3:kk
 end
 
 % figure(2);
-% stairs(0:60, U(13:73));
+stairs(0:60, U(13:73));
 % hold on;
 % stairs(0:kk-13, Yzad(13:end-N),'LineWidth', 1.1);
 
-stairs(0:280, Y(13:293));
+% stairs(0:80, Y(13:93));
 hold on;
 
-xlabel('okres (k)');
-% ylabel('wartosc sterowania u(k)');
+ xlabel('okres (k)');
+ylabel('wartosc sterowania u(k)');
 % legend('L=5', 'L=10', 'L=15', 'L=20', 'L=25');
 grid on;
 
