@@ -316,32 +316,32 @@ W przypadku obiektu o parametrach z zadania $2.29$ odpowiedź skokowa ma następ
 Po przeanalizowaniu powyższego wykresu ustalono wartość horyzontu dynamiki na $125$. Ustawiono wartości parametrów $N$ i $N_u$ na tą samą wartość, wartość współczynnika $\lambda$ macierzy $\Lambda$ ustalono początkowo na wartość $1$ i przetestowano jakość algorytmu. Wyniki eksperymentu znajdują się Poniżej
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/regDDD.png}
+	\includegraphics[width=\textwidth]{scripts/regDDD2.png}
 	\caption{odpowiedź obiektu regulacji przy nastawach $125, 125, 125, 1$}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/regDDDster.png}
+	\includegraphics[width=\textwidth]{scripts/regDDDster2.png}
 	\caption{sygnał sterujący przy nastawach $125, 125, 125, 1$}
 	\label{}
 \end{figure}
 
-Jak widać regulator został poprawnie zaprojektowany, podstawowe nastawy parametrów powodują szybką regulację z niewielkim przeregulowaniem. Dalszą częscią zadania było ograniczenie wartości parametru horyzontu predykcji, co znacząco zmniejszyło nakład obliczeń algorytmu dzięki mniejszym wektorom i macierzom.
+Jak widać regulator został poprawnie zaprojektowany, podstawowe nastawy parametrów powodują stosunkowo szybką regulację z szybko gasnącymi oscylacjami. Dalszą częscią zadania było ograniczenie wartości parametru horyzontu predykcji, co znacząco zmniejszyło nakład obliczeń algorytmu dzięki mniejszym wektorom i macierzom.
 
 \subsection{Wyznaczanie horyzontu predykcji}
 
-
-Przeprowadzono kilka testów i ostatecznie zdecydowano na wybranie wartości z okolic $20$. Poniżej przedstawiono kilka odpowiedzi dla różnych wartości z okolic tej liczby. Wartość horyzontu dynamiki pozostała niemzieniona, tak samo wartość parametru $\lambda$. Przyjęto też $N_u=N$.
+%TODO poprawić wybraną wartość
+Przeprowadzono kilka testów i ostatecznie zdecydowano na wybranie wartości z okolic $20$. Powyżej niej nie miała miejsca żadna zmiana sygnału sterującego bądź wyjścia obiektu. Poniżej przedstawiono kilka odpowiedzi dla różnych wartości z okolic tej liczby. Wartość horyzontu dynamiki pozostała niemzieniona, tak samo wartość parametru $\lambda$. Przyjęto też $N_u=N$.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/zadanie5bwyjscie.png}
+	\includegraphics[width=\textwidth]{scripts/zadanie5bwyjscie2.png}
 	\caption{odpowiedź obiektu regulacji dla parametrów $N$ oraz $N_u$ w okolicach 20}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/zadanie5bster.png}
+	\includegraphics[width=\textwidth]{scripts/zadanie5bster2.png}
 	\caption{sygnał sterujący obiektu regulacji dla parametrów $N$ oraz $N_u$ w okolicach 20}
 \end{figure}
 
-Jak widać wartości w granicach $(22;16)$ są bardzo zbliżone, jednak zdecydowano się pozostawić wartość horyzontu predykcji na 18, gdyż powoduje w miarę niewielkie zmiany sterowania i dosyć szybką regulację obiektu sterowania. Wyraźnie widać, że wybranie horyzontu mniejszego niż $16$ powodowało by zdecydowanie większe oscylacje i dłuższy czas regulacji niż większe wartości- po przekroczeniu tej granicy regulator traci powoli zdolności regulacji, posiada za mało danych, aby operować w sposób optymalny. Z kolei większe wartości wciąż oscylowały w okolicach tej samej odpowiedzi, co widać dzięki podobieństwu nastaw początkowych $(125, 125, 125, 1)$, które uzyskały podobną odpowiedź co nastawy ostatecznie wybrane. Widać więc, że regulator nie wymaga więcej danych, aby operować zgodnie z oczekiwaniami.
+Jak widać wartości w granicach $(24;18)$ są bardzo zbliżone, jednak zdecydowano się pozostawić wartość horyzontu predykcji na $20$, gdyż powoduje w miarę niewielkie zmiany sterowania i dosyć szybką regulację obiektu sterowania. Wyraźnie widać, że wybranie horyzontu mniejszego niż $18$ powodowało by zdecydowanie większe oscylacje i dłuższy czas regulacji niż większe wartości- po przekroczeniu tej granicy regulator traci powoli zdolności regulacji, posiada za mało danych, aby operować w sposób optymalny. Z kolei większe wartości wciąż oscylowały w okolicach tej samej odpowiedzi, co widać dzięki podobieństwu nastaw początkowych $(125, 125, 125, 1)$, które uzyskały podobną odpowiedź co nastawy ostatecznie wybrane. Widać więc, że regulator nie wymaga więcej danych, aby operować zgodnie z oczekiwaniami.
 
 \subsection{Wyznaczanie horyzontu sterowania}
 
@@ -349,26 +349,26 @@ Jak widać wartości w granicach $(22;16)$ są bardzo zbliżone, jednak zdecydow
 Następnym punktem doboru nastaw było wybranie odpowiedniej wartości horyzontu sterowania. Przy wartościach pozostałych parametrów ustalonych w poprzednim punkcie rozpoczęto badania współczynnika od $1$ i kilku następnych wartości.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/zadanie5cwyjscie.png}
+	\includegraphics[width=\textwidth]{scripts/zadanie5cwyjscie2.png}
 	\caption{odpowiedź obiektu regulacji dla różnych długości horyzontu sterowania}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/zadanie5cster.png}
+	\includegraphics[width=\textwidth]{scripts/zadanie5cster2.png}
 	\caption{wyjście sterowania obiektu regulacji dla różnych długości horyzontu sterowania}
 \end{figure}
 
-Na podstawie powyższych wykresów można wysnuć interesujący wniosek. Najlepsza jakość regulacji odpowiada horyzontowi sterowania równemu $1$. Zarówno odpowiedź obiektu, jak i wartość sterowania najszybciej się stabilizują i mają najmniejsze przeregulowania w drugiej fazie regulacji, między $10$ a $20$ próbką dla sterowania i $20$ a $30$ dla odpowiedzi. Jedynym problemem może być duża wartość początkowa sygnału sterującego, lecz i tak jest ona zdecydowanie mniejsza niż w przypadku horyzontu sterowania o długości $20$. Można wysnuć wniosek, że próba wyskoczenia zbyt daleko do przodu w tym przypadku szkodzi optylmalnej regulacji obiektu. Pozwala to jednak dodatkowo zminimalizować nakład obliczeń z pozytywnym wpływem na jakość regulacji.
+Na podstawie powyższych wykresów można wysnuć interesujący wniosek. Najlepsza jakość regulacji odpowiada horyzontowi sterowania równemu $1$. Zarówno odpowiedź obiektu, jak i wartość sterowania najszybciej się stabilizują i nie mają przeregulowania. Jedynym problemem może być duża wartość początkowa sygnału sterującego, lecz i tak jest ona zdecydowanie mniejsza niż w przypadku horyzontu sterowania o długości $20$. Można wysnuć wniosek, że próba wyskoczenia zbyt daleko do przodu w tym przypadku szkodzi optylmalnej regulacji obiektu. Pozwala to jednak dodatkowo zminimalizować nakład obliczeń z pozytywnym wpływem na jakość regulacji.
 
 \subsection{Badanie parametru $\lambda$}
 
-	Parametr $\lambda$ ma za zadanie ograniczyć wartość sygnału sterującego. ponieważ  Zmiany jednostkowe nie przynosiły prawie żadnych zmian, zdecydowano się na wybranie kilku wartości z przedziału $(1;30)$. Wyniki znajdują się poniżej.
+	Parametr $\lambda$ ma za zadanie ograniczyć wartość sygnału sterującego. ponieważ  Zmiany jednostkowe nie przynosiły prawie żadnych zmian, zdecydowano się na wybranie kilku wartości z przedziału $[5;45]$. Wyniki znajdują się poniżej.
 
 	\begin{figure}[H]
-		\includegraphics[width=\textwidth]{scripts/zadanie5dwyjscie.png}
+		\includegraphics[width=\textwidth]{scripts/zadanie5dwyjscie2.png}
 		\caption{wyjście obiektu regulacji dla kolejnych wartości parametru $\lambda$}
 	\end{figure}
 	\begin{figure}[H]
-		\includegraphics[width=\textwidth]{scripts/zadanie5dster.png}
+		\includegraphics[width=\textwidth]{scripts/zadanie5dster2.png}
 		\caption{wartość sterowania obiektu regulacji dla kolejnych wartości parametru $\lambda$}
 	\end{figure}
 
@@ -383,13 +383,13 @@ Proces przeprowadzania eksperymentu dla każdego z poniższych regulatorów był
 Poniżej znajduje się wykres wartości granic stabilności dla regulatorów PID z nastawami Z-N, poprawionymi oraz algorytmu DMC z wyznaczonymi w poprzednim punkcie parametrami $D, N$ oraz $N_u$ i $\lambda$.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{scripts/zad6.png}
+	\includegraphics[width=\textwidth]{scripts/zad62.png}
 	\caption{granice stabilności dla algorytmów PID oraz DMC}
 \end{figure}
 
-Pierwszą rzeczą, jaka jest widoczna od początku, jest przewaga zapasów stabilności regulatora DMC nad regulatorem PID. Chociaż dla dobrze dostrojonego algorytmu proporcjonalno-całjąco-różniczkującego na początku ta różnica nie jest duża, to w połowie testu zapasy DMC rosną zamiast maleć, więc różnica między algorytmami zaczyna się powiększać. Jednak gdy opóźnienie przekroczyło wartość  horyzontu predykcji, algorytm odmówił posłuszeństwa. Należy mieć więc na uwadze, że algorytm DMC jest bardziej odporny na zmiany wzmocnienia statycznego obiektu, ale szybciej staje się bezużyteczny przy zmianie opóźnienia.
+Pierwszą rzeczą, jaka jest widoczna od początku, jest przewaga zapasów stabilności regulatora DMC nad regulatorem PID. Chociaż dla dobrze dostrojonego algorytmu proporcjonalno-całjąco-różniczkującego na początku ta różnica nie jest duża, to w połowie testu zapasy DMC zaczynają gwałtownie maleć, więc różnica między algorytmami szybko topnieje i zamieniają się miejscami. Można wysnuć wniosek, że algorytm DMC jest bardziej odporny na mniejsze zmiany opóźnienia obiektu
 
-Warto również zaznaczyć, że lepiej dostrojony algorytm PID ma większe zapasy stabilności, mimo że te prawie liniowo wciąż się zmniejszają, jednak nie ma niebezpieczeństwa nagłego zaprzestania regulacji jak w drugim algorytmie.
+Warto również zaznaczyć, że lepiej dostrojony algorytm PID ma większe zapasy stabilności niż ten z nastawami Z-N, mimo że te prawie liniowo wciąż się zmniejszają.
 
 \section{Podsumowanie}
 

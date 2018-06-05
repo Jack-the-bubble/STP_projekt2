@@ -1,13 +1,9 @@
 % Dane z zadania
-Tp = 0.5;
-
-% Wpolczynniki rownania roznicowego
-% a1=-1.676; a0=0.6966; b1=0.05029; b0=0.04458; 
 run('init')
 
 
 
-zet=182.5;
+zet=0;
     
 Ko=4.5+zet/10;
 
@@ -19,8 +15,8 @@ opoz=z.InputDelay;
 aa1=z.Denominator{1}; bb1=z.Numerator{1}; 
 a1=aa1(2); a0=aa1(3);b1=bb1(2);b0=bb1(3);
 
-% Czas symulacji oraz wartosc zadana
-kk = 150; % Koniec symulacji
+% Dlugosc symulacji, skok
+kk = 150;
 U = ones(kk,1);
 U(1:opoz+2) = 0;  % Wymuszenie rowne 1 od momentu rozpoczecia symulacji
 Y = zeros(kk,1); % Kolejne probki odpowiedzi skokowej
@@ -100,15 +96,15 @@ for k = opoz+3:kk
 end
 
 % figure(2);
-stairs(0:60, U(13:73));
+% stairs(0:60, U(13:73));
 % hold on;
 % stairs(0:kk-13, Yzad(13:end-N),'LineWidth', 1.1);
 
-% stairs(0:80, Y(13:93));
+stairs(0:80, Y(13:93));
 hold on;
 
  xlabel('okres (k)');
-ylabel('wartosc sterowania u(k)');
+% ylabel('wartosc sterowania u(k)');
 % legend('L=5', 'L=10', 'L=15', 'L=20', 'L=25');
 grid on;
 

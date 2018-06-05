@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Wyznaczenie transmitancji dyskretnej}{}% 1
+\BOOKMARK [1][-]{section.2}{R\363wnanie r\363znicowe}{}% 2
+\BOOKMARK [1][-]{section.3}{Ciag\233y regulator PID}{}% 3
+\BOOKMARK [1][-]{section.4}{Regulatory dyskretne}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Nastawy Zieglera-Nicholsa}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Nastawy poprawione}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{Por\363wnanie}{section.4}% 7
+\BOOKMARK [1][-]{section.5}{Regulator DMC}{}% 8
+\BOOKMARK [2][-]{subsection.5.1}{Odpowiedz swobodna}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.2}{Odpowiedz wymuszona}{section.5}% 10
+\BOOKMARK [1][-]{section.6}{Dobieranie regulatora DMC}{}% 11
+\BOOKMARK [2][-]{subsection.6.1}{Wyznaczanie horyzontu dynamiki}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.2}{Wyznaczanie horyzontu predykcji}{section.6}% 13
+\BOOKMARK [2][-]{subsection.6.3}{Wyznaczanie horyzontu sterowania}{section.6}% 14
+\BOOKMARK [2][-]{subsection.6.4}{Badanie parametru }{section.6}% 15
+\BOOKMARK [1][-]{section.7}{Obszary stabilnosci}{}% 16
+\BOOKMARK [1][-]{section.8}{Podsumowanie}{}% 17

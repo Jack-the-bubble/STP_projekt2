@@ -1,0 +1,18 @@
+\select@language {polish}
+\contentsline {section}{\numberline {1.}Wyznaczenie transmitancji dyskretnej}{2}{section.1}
+\contentsline {section}{\numberline {2.}R\IeC {\'o}wnanie r\IeC {\'o}\IeC {\.z}nicowe}{3}{section.2}
+\contentsline {section}{\numberline {3.}Ci\IeC {\k a}g\IeC {\l }y regulator PID}{4}{section.3}
+\contentsline {section}{\numberline {4.}Regulatory dyskretne}{5}{section.4}
+\contentsline {subsection}{\numberline {a)}Nastawy Zieglera-Nicholsa}{6}{subsection.4.1}
+\contentsline {subsection}{\numberline {b)}Nastawy poprawione}{6}{subsection.4.2}
+\contentsline {subsection}{\numberline {c)}Por\IeC {\'o}wnanie}{6}{subsection.4.3}
+\contentsline {section}{\numberline {5.}Regulator DMC}{7}{section.5}
+\contentsline {subsection}{\numberline {a)}Odpowied\IeC {\'z} swobodna}{7}{subsection.5.1}
+\contentsline {subsection}{\numberline {b)}Odpowied\IeC {\'z} wymuszona}{8}{subsection.5.2}
+\contentsline {section}{\numberline {6.}Dobieranie regulatora DMC}{8}{section.6}
+\contentsline {subsection}{\numberline {a)}Wyznaczanie horyzontu dynamiki}{9}{subsection.6.1}
+\contentsline {subsection}{\numberline {b)}Wyznaczanie horyzontu predykcji}{11}{subsection.6.2}
+\contentsline {subsection}{\numberline {c)}Wyznaczanie horyzontu sterowania}{12}{subsection.6.3}
+\contentsline {subsection}{\numberline {d)}Badanie parametru $\lambda $}{14}{subsection.6.4}
+\contentsline {section}{\numberline {7.}Obszary stabilno\IeC {\'s}ci}{15}{section.7}
+\contentsline {section}{\numberline {8.}Podsumowanie}{16}{section.8}
